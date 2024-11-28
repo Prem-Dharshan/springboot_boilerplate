@@ -8,27 +8,20 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class OrgHandler {
+public class AuthHandler {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
-    public List<Object[]> listAllOrgs() {
+    public List<Object[]> authUser(String empEmail, String password) {
         StringBuilder query = new StringBuilder();
-        query.append("select * from t_organization ");
+        query.append("select * from t_user where emp_email = :empEmail and password = :password ");
 
         Query nativeQuery = entityManager.createNativeQuery(query.toString());
+        nativeQuery.setParameter("empEmail", empEmail);
+        nativeQuery.setParameter("password", password);
         return nativeQuery.getResultList();
     }
 
-    @SuppressWarnings("unchecked")
-    public List<Object[]> getProductList(Integer id) {
-        StringBuilder query = new StringBuilder();
-        query.append("select id, product_name from t_product where org_id = :id ");
-
-        Query nativeQuery = entityManager.createNativeQuery(query.toString());
-        return nativeQuery.setParameter("id", id).getResultList();
-    }
 }
-
