@@ -41,12 +41,11 @@ public class OrganizationServiceImpl implements OrganizationService {
         List<Object[]> orgs = orgHandler.getProductList(id);
         List<ProductDTO> products = new ArrayList<>();
 
-        for  (Object[] org : orgs) {
-             ProductDTO dto = new ProductDTO();
-             dto.setId(Integer.parseInt(Objects.toString(org[0])));
-             dto.setName((String) org[1]);
-
-             products.add(dto);
+        for (Object[] org : orgs) {
+            ProductDTO dto = new ProductDTO();
+            dto.setId(Integer.parseInt(Objects.toString(org[0])));
+            dto.setName((String) org[1]);
+            products.add(dto);
         }
 
         return products;
