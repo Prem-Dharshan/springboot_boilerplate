@@ -4,21 +4,60 @@ import com.sample.springboot_boilerplate.dto.UserDTO;
 import com.sample.springboot_boilerplate.exception.InvalidCredentialsException;
 import com.sample.springboot_boilerplate.exception.ResourceNotFoundException;
 import com.sample.springboot_boilerplate.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
+@RequestMapping("api/user")
 public class UserController {
 
     private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PostMapping
+    public ResponseEntity<Object> createUser(@Valid @RequestBody UserDTO userDTO) {
+        try {
+            // Attempt to create the user
+            UserDTO createdUser = userService.createUser(userDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser); // Return 201 for resource creation
+        } catch (IllegalArgumentException e) {
+            // Return 409 Conflict with error message if email already exists
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("User already exists with email: " + userDTO.getMailId());
+        }
+    }
+
+
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id) {
+        UserDTO user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Integer id, @Valid @RequestBody UserDTO userDTO) {
+        UserDTO updatedUser = userService.updateUser(id, userDTO);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build(); // Return 204 for successful deletion
     }
 
     @GetMapping("/login")
