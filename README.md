@@ -20,6 +20,8 @@ Before you start, ensure you have the following installed on your machine:
       ```bash
       gradle -v
       ```
+- **Resources**: Go through the Resources mentioned in the file below. Learn the stack by doing the Udemy Course
+    - [Resources](./RESOURCES.md)
 
 ---
 
