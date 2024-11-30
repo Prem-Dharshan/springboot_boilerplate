@@ -5,7 +5,7 @@
 ## 1. **💻 Java from Scratch**
 - [Watch on YouTube 🎥](https://www.youtube.com/watch?v=BGTx91t8q50)
 
-## <span style="color: green;">2. **✨🚩 Spring Boot and React from Scratch**</span>
+## <span style="color: green;">2. **✨🚩 Spring Boot and React from Scratch**</span> (Important and main resource for getting started)
 - [Full Stack Java Development with Spring Boot & React - Udemy Course 🎓](https://www.udemy.com/course/full-stack-java-development-with-spring-boot-react/)
 
 ## 3. **🔍 MVC Explained**
